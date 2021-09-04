@@ -13,9 +13,8 @@ const app = express();
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(express.static(join(__dirname, 'public')));
-app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 
+app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -27,6 +26,7 @@ app.use(
     sourceMap: true
   })
 );
+app.use(express.static(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
