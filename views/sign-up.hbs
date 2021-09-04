@@ -1,11 +1,16 @@
+{{!
+##############################################
+## Iteration 4 Bonus - Frontend validations ##
+############################################## }}
+
 Sign-up:
 
 <form method='POST'>
    <label for='input-username'>Your Username</label>
-   <input id='input-username' type='text' name='username' placeholder='Your Username' required />
+   <input id='input-username' type='text' name='username' placeholder='Your Username' required='required' />
 
    <label for='input-password'>Password</label>
-   <input id='input-password' type='password' name='password' placeholder='Password' required minlength='5' />
+   <input id='input-password' type='password' name='password' placeholder='Password' required='required' minlength='5' />
 
    <button>Sign Up</button>
 </form>
