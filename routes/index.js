@@ -4,6 +4,8 @@ const bcryptjs = require('bcryptjs');
 
 const router = new express.Router();
 
+const routeGuardMiddleware = require('./../middleware/route-guard');
+
 router.get('/', (req, res, next) => {
   res.render('index');
 });
@@ -79,6 +81,18 @@ router.post('/log-in', (req, res, next) => {
     .catch((error) => {
       next(error);
     });
+});
+
+// ###################################
+// ## Iteration 3: protected routes ##
+// ###################################
+
+router.get('/main', routeGuardMiddleware, (req, res, next) => {
+  res.render('main');
+});
+
+router.get('/private', routeGuardMiddleware, (req, res, next) => {
+  res.render('private');
 });
 
 module.exports = router;
