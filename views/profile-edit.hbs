@@ -1,0 +1,13 @@
+<h3>Edit your profile</h3>
+
+{{#with foundUser}}
+   <form action='/profile/edit' method='POST'>
+      <label for='input-name'>Your Name</label>
+      <input id='input-name' type='text' name='name' value='{{name}}' />
+
+      <label for='input-username'>Your Username</label>
+      <input id='input-username' type='text' name='username' value='{{username}}' />
+
+      <button class='btn btn-secondary'>Update Profile</button>
+   </form>
+{{/with}}

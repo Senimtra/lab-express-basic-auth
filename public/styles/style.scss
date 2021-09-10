@@ -30,3 +30,11 @@ img {
 button {
   margin-top: 2em;
 }
+
+a:active,
+a:link,
+a:visited,
+a:hover {
+  color: white;
+  text-decoration: none;
+}

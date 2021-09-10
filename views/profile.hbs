@@ -1,6 +1,8 @@
 {{#with foundUser}}
    <h3>{{username}}'s profile page</h3>
    <br />
+   <p><b>Name:</b>&nbsp; {{name}}</p>
    <p><b>Username:</b>&nbsp; {{username}}</p>
    <p><b>User Id:</b>&nbsp; {{_id}}</p>
+   <button class='btn btn-secondary btn-sm'><a href='/profile/edit'>Edit profile</a></button>
 {{/with}}

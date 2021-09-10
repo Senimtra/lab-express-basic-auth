@@ -20,7 +20,7 @@ app.set('view engine', 'hbs');
 
 // ### Set up modules ###
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
-app.use(logger('dev'));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(
   sassMiddleware({
@@ -34,6 +34,9 @@ app.use(
 
 // ### Set public folder ###
 app.use(express.static(join(__dirname, 'public')));
+
+// ### Set up morgan ###
+app.use(logger('dev'));
 
 // ### Set up sessions ###
 app.use(

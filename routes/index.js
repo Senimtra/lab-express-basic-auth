@@ -97,10 +97,12 @@ router.post('/log-in', (req, res, next) => {
 // ## Iteration 3: Protected Routes ##
 // ###################################
 
+// ### Main page GET route ###
 router.get('/main', routeGuardMiddleware, (req, res) => {
   res.render('main');
 });
 
+// ### Private page GET route ###
 router.get('/private', routeGuardMiddleware, (req, res, next) => {
   const userId = req.session.userId;
   User
@@ -114,12 +116,11 @@ router.get('/private', routeGuardMiddleware, (req, res, next) => {
     });
 });
 
-module.exports = router;
-
 // #####################################
 // ## Iteration 5 Bonus: Profile Page ##
 // #####################################
 
+// ### Profile GET route ###
 router.get('/profile', routeGuardMiddleware, (req, res, next) => {
   const userId = req.session.userId;
   User
@@ -131,3 +132,33 @@ router.get('/profile', routeGuardMiddleware, (req, res, next) => {
       next(error);
     });
 });
+
+// ########################################
+// ## Iteration 6 Bonus: Editing Profile ##
+// ########################################
+
+// ### Profile update GET route ###
+router.get('/profile/edit', routeGuardMiddleware, (req, res, next) => {
+  const userId = req.session.userId;
+  User
+    .findById(userId)
+    .then(foundUser => {
+      res.render('profile-edit', { foundUser });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+// ### Profile update POST route ###
+router.post('/profile/edit', routeGuardMiddleware, (req, res, next) => {
+  const userId = req.session.userId;
+  const { name, username } = req.body;
+  User.updateOne({ _id: userId }, { name, username })
+    .then(() => res.redirect('/profile'))
+    .catch(error => {
+      next(error);
+    });
+});
+
+module.exports = router;
