@@ -1,11 +1,27 @@
 body {
   margin: 0;
-  padding: 50px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: dimgrey;
-  /* dark-mode */ }
+  padding: 50px; }
 
-a {
-  color: #00b7ff; }
+form {
+  max-width: 20em;
+  display: flex;
+  flex-direction: column; }
+  form label {
+    margin-top: 1em; }
+
+ul {
+  width: 100%; }
+
+.to-right {
+  margin-left: auto; }
+
+img {
+  width: 15em;
+  height: 25em;
+  object-fit: cover;
+  margin-top: 1em; }
+
+button {
+  margin-top: 2em; }
 
 /*# sourceMappingURL=style.css.map */

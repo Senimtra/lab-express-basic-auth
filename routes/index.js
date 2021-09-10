@@ -1,12 +1,20 @@
+// ### Require express ###
 const express = require('express');
+
+// ### Require user model ###
 const User = require('./../models/user');
+
+// ### Require bcryptjs module ###
 const bcryptjs = require('bcryptjs');
 
+// ### Instantiate index router ###
 const router = new express.Router();
 
+// ### Require route guard middleware ###
 const routeGuardMiddleware = require('./../middleware/route-guard');
 
-router.get('/', (req, res, next) => {
+// ### Root GET route ###
+router.get('/', (req, res) => {
   res.render('index');
 });
 
@@ -15,13 +23,14 @@ router.get('/', (req, res, next) => {
 // ###########################
 
 // ### Sign-up GET route ###
-router.get('/sign-up', (req, res, next) => {
+router.get('/sign-up', (req, res) => {
   res.render('sign-up');
 });
 
 // ### Sign-up POST route ###
 router.post('/sign-up', (req, res, next) => {
   const { username, password } = req.body;
+  if (!username || !password) throw new Error('ALL_FIELDS_HAVE_TO_BE_FILLED');
   let user;
   User.findOne({ username })
     .then((document) => {
@@ -52,13 +61,14 @@ router.post('/sign-up', (req, res, next) => {
 // ##########################
 
 // ### Log-in GET route ###
-router.get('/log-in', (req, res, next) => {
+router.get('/log-in', (req, res) => {
   res.render('log-in');
 });
 
 // ### Log-in POST route ###
 router.post('/log-in', (req, res, next) => {
   const { username, password } = req.body;
+  if (!username || !password) throw new Error('ALL_FIELDS_HAVE_TO_BE_FILLED');
   let user;
   User.findOne({ username })
     .then((document) => {
@@ -84,15 +94,40 @@ router.post('/log-in', (req, res, next) => {
 });
 
 // ###################################
-// ## Iteration 3: protected routes ##
+// ## Iteration 3: Protected Routes ##
 // ###################################
 
-router.get('/main', routeGuardMiddleware, (req, res, next) => {
+router.get('/main', routeGuardMiddleware, (req, res) => {
   res.render('main');
 });
 
 router.get('/private', routeGuardMiddleware, (req, res, next) => {
-  res.render('private');
+  const userId = req.session.userId;
+  User
+    .findById(userId)
+    .then(foundUser => {
+      const userName = foundUser.username;
+      res.render('private', { userName });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 module.exports = router;
+
+// #####################################
+// ## Iteration 5 Bonus: Profile Page ##
+// #####################################
+
+router.get('/profile', routeGuardMiddleware, (req, res, next) => {
+  const userId = req.session.userId;
+  User
+    .findById(userId)
+    .then(foundUser => {
+      res.render('profile', { foundUser });
+    })
+    .catch(error => {
+      next(error);
+    });
+});

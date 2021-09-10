@@ -1,13 +1,32 @@
-$font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$link-color: #00b7ff;
-
 body {
   margin: 0;
   padding: 50px;
-  font-family: $font-sans;
-  background-color: dimgrey; /* dark-mode */
 }
 
-a {
-  color: $link-color;
+form {
+  max-width: 20em;
+  display: flex;
+  flex-direction: column;
+  label {
+    margin-top: 1em;
+  }
+}
+
+ul {
+  width: 100%;
+}
+
+.to-right {
+  margin-left: auto;
+}
+
+img {
+  width: 15em;
+  height: 25em;
+  object-fit: cover;
+  margin-top: 1em;
+}
+
+button {
+  margin-top: 2em;
 }

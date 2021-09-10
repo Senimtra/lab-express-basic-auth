@@ -1,3 +1,4 @@
+// ### Create route guard ###
 const routeGuardMiddleware = (req, res, next) => {
   if (req.session.userId) {
     next();
@@ -8,4 +9,5 @@ const routeGuardMiddleware = (req, res, next) => {
   }
 };
 
+// ### Export route guard ###
 module.exports = routeGuardMiddleware;

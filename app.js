@@ -1,22 +1,24 @@
+// ### Require modules ###
 const { join } = require('path');
 const express = require('express');
 const createError = require('http-errors');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const serveFavicon = require('serve-favicon');
-
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo');
 
+// ### Require index routes ###
 const indexRouter = require('./routes/index');
 
+// ### Create express app ###
 const app = express();
 
-// Setup view engine
+// ### Set up view engine ###
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-
+// ### Set up modules ###
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -29,15 +31,18 @@ app.use(
     sourceMap: true
   })
 );
+
+// ### Set public folder ###
 app.use(express.static(join(__dirname, 'public')));
 
+// ### Set up sessions ###
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
     cookie: {
-      maxAge: 60 * 1000 // 1 min
+      maxAge: 60 * 5 * 1000 // 5 min
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
@@ -46,21 +51,22 @@ app.use(
   })
 );
 
+// ### Set up root ###
 app.use('/', indexRouter);
 
-// Catch missing routes and forward to error handler
+// ### Catch missing routes and forward to error handler ###
 app.use((req, res, next) => {
   next(createError(404));
 });
 
-// Catch all error handler
+// ### Catch all error handler ###
 app.use((error, req, res, next) => {
   // Set error information, with stack only available in development
   res.locals.message = error.message;
   res.locals.error = req.app.get('env') === 'development' ? error : {};
-
   res.status(error.status || 500);
   res.render('error');
 });
 
+// ### Export app ###
 module.exports = app;

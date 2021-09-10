@@ -1,8 +1,11 @@
+// ### Require dotenv module ###
 require('dotenv').config();
 
+// ### Require app ###
 const app = require('./app');
-const mongoose = require('mongoose');
 
+// ### Set up DB connection ###
+const mongoose = require('mongoose');
 const PORT = parseInt(process.env.PORT, 10);
 const URI = process.env.MONGODB_URI;
 
